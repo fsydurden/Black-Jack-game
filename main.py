@@ -31,30 +31,34 @@ def calculate_score(card_list):
     else:
         return total
 
-game_is_on = True
+display = ""
 
-def check_winner(user_card_list, computer_card_list):
+def check_winner(user_card_list, computer_card_list, display_text):
     user_total = calculate_score(user_card_list)
     computer_total = calculate_score(computer_card_list)
     if user_total == 0:
-        return "You won!! (Blackjack)"
+        display = "You won!! (Blackjack)"
+        return False
     elif computer_total == 0:
         return "You lose, computer has Blackjack!!"
     elif user_total > 21:
         return "You lose!! Your score exceeds 21."
     elif computer_total > 21:
         return "You won!! Computer score exceeds 21."
+    elif len(user_cards) == 3 and user_total <= 21 and user_total > computer_total :
+        return "You won1"
     else:
         return True
 
-winner = check_winner(user_cards,computer_cards)
+winner = check_winner(user_cards,computer_cards,display)
 print(winner)
 
 while winner:
     choice = str(input("type 'y' if you want another card")).lower()
     if choice == "y":
         user_cards.append(deal_cards())
-        print(user_cards)
-        winner = check_winner(user_cards, computer_cards)
+        print(user_cards )
+        winner = check_winner(user_cards, computer_cards,display)
+
     else:
-        print("Game ended")
+        winner = check_winner(user_cards,computer_cards,display)
